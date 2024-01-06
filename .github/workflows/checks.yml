@@ -1,0 +1,21 @@
+name: Checks
+
+on: 
+  pull_request
+
+jobs:
+  test-lint:
+    name: Test and Lint
+    runs-on: ubuntu-20.04 # The type of machine to run on
+    steps: # A step is a task that can run commands in a job
+      - name: Login to docker hub # Login to docker hub so we can push the image
+        uses: docker/login-actions@1
+        with:
+          username: ${{secrets.DOCKERHUB_USER}}
+          password: ${{secrets.DOCKERHUB_TOKEN}}
+      - name: Checkout # Checkout the code from the repository so we can build and use it
+        uses: actions/checkout@v2
+      - name: test
+        run: docker-compose run --rm app sh -c "python manage.py test"
+      - name: lint
+        run: docker-compose --rm app sh -c "flake8"
