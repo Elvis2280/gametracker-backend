@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04 # The type of machine to run on
     steps: # A step is a task that can run commands in a job
       - name: Login to docker hub # Login to docker hub so we can push the image
-        uses: docker/login-actions@1
+        uses: docker/login-action@v1
         with:
           username: ${{secrets.DOCKERHUB_USER}}
           password: ${{secrets.DOCKERHUB_TOKEN}}
