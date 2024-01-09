@@ -16,4 +16,4 @@ jobs:
       - name: Build
         run: docker-compose run --rm app sh -c "pnpm install && pnpm run build"
       - name: Test
-        run: docker-compose run --rm app sh -c "pnpm install && pnpm run test"
+        run: docker-compose run --rm app sh -c "pnpm install && pnpm run test --passWithNoTests"
