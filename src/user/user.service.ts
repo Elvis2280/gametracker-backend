@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
 
 @Injectable()
@@ -13,6 +13,10 @@ export class UserService {
       },
     });
 
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
     return {
       id: user.id,
       email: user.email,
@@ -20,7 +24,7 @@ export class UserService {
     };
   }
 
-  async createUser(email: string, password: string, name: string) {
+  async createUserAccount(email: string, password: string, name: string) {
     const user = await this.prisma.user.create({
       data: {
         email,
@@ -28,6 +32,13 @@ export class UserService {
         name,
       },
     });
+
+    if (!user) {
+      throw new HttpException(
+        'Something went wrong',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
 
     return {
       id: user.id,
