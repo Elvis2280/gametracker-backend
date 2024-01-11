@@ -1,9 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule); // NestFactory.create() creates an instance of the Nest application
+
+  app.useGlobalPipes(new ValidationPipe()); // app.useGlobalPipes() sets up a global validation pipe that uses the class-validator package
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Gametracker API')
