@@ -3,22 +3,21 @@ import { GameController } from './game/controllers/gamecontroller';
 import { AppService } from './app.service';
 import { UserController } from './user/usercontroller';
 import { GameService } from './game/game.service';
-import { UserService } from './user/user.service';
 import { PrismaService } from './prisma.service';
-import { AuthService } from './auth/auth.service';
 import { AuthController } from './auth/auth.controller';
-import { JwtService } from '@nestjs/jwt';
+import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './user/users.module';
 
 @Module({
-  imports: [],
-  controllers: [GameController, UserController, AuthController],
-  providers: [
-    PrismaService,
-    JwtService,
-    AppService,
-    GameService,
-    UserService,
-    AuthService,
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    AuthModule,
+    UsersModule,
   ],
+  controllers: [GameController, UserController, AuthController],
+  providers: [PrismaService, AppService, GameService],
 })
 export class AppModule {}
