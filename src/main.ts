@@ -13,6 +13,7 @@ async function bootstrap() {
     .setDescription("Gametracker API's documentation")
     .setVersion('1.0')
     .addServer('http://localhost:8080/', 'Local environment')
+    .addBearerAuth()
     .build();
   const swaggerDocument = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('api', app, swaggerDocument); // SwaggerModule.setup() sets up the Swagger module to expose the Swagger UI

@@ -42,3 +42,13 @@ export class CreateUserDto extends GetUserDto {
   @IsString()
   name: string;
 }
+
+export class GetUserById {
+  @ApiProperty({
+    description: 'The id of the user',
+    example: '123456789',
+  })
+  @IsString()
+  @IsNotEmpty()
+  userId: string;
+}
