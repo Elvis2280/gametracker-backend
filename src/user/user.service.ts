@@ -25,6 +25,14 @@ export class UserService {
   }
 
   async createUserAccount(email: string, password: string, name: string) {
+    const userExists = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+    if (userExists)
+      throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
+
     const user = await this.prisma.user.create({
       data: {
         email,
